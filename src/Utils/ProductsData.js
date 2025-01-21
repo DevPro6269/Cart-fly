@@ -14,12 +14,12 @@ let categorydata = {
         {
             slug: "mens-watches",
             category:"mens-watches",
-            src:"https://seikowatches.co.in/cdn/shop/files/SSH161J1copy_1080x.jpg?v=1728536479"
+            src:"https://www.ethoswatches.com/the-watch-guide/wp-content/uploads/2021/06/Top-Watches-Under-Two-Lakh-Feat.jpg"
         },
         {
             slug: "sunglasses",
             category:"Sunglasses",
-            src:"https://objects-prod.cdn.chopard.com/q_auto,f_auto,dpr_2/e_trim/w_iw,h_ih,c_lpad,g_center/c_pad,ar_1:1,w_1490,e_sharpen:60/ProductsAssets/Web/95217-0731_01.png"
+            src:"https://media.vogue-eyewear.com/2023/00_Ticket/NL_OVERLAY/NLO_image.jpg"
         }
     ],
     Women:[
@@ -49,7 +49,7 @@ let categorydata = {
         },
         {   slug:"laptops",
             category:"Laptops",
-            src:"https://p1-ofp.static.pub//medias/26091468605_Legion916IRX8_202310110205531697016319923.png"
+            src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj9zTsUw9GLhneuaoFGKsx3WAzZc9qE1SK_w&s"
         },
         {   slug:"smartphones",
             category:"Smartphones",
@@ -82,7 +82,7 @@ let categorydata = {
     Home:[
         {  slug:"groceries",
             category:"Groceries",
-            src:"https://media.istockphoto.com/id/467970412/vector/groceries.jpg?s=612x612&w=0&k=20&c=tH30XMv3C-OnoxGIvN3sWmjbmtbdOJMuffd_dR9L5Z8="
+            src:"https://png.pngtree.com/png-vector/20241108/ourmid/pngtree-supermarket-shopping-cart-with-fresh-groceries-png-image_14304601.png"
         },
         {   slug:"kitchen-accessories",
             category:"Kitchen Accessories",

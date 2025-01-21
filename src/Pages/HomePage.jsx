@@ -1,53 +1,51 @@
 import React from 'react'
 import ImageCursol from '../Components/Header/ImageCursol'
-import Category_card from '../Components/Categories/Category_card'
 import categorydata from "../Utils/ProductsData"
 import { nanoid } from '@reduxjs/toolkit'
-import Category_container from '../Components/Categories/Category_container'
-import banner from "../assets/Black and Red Typographic Sale and Discount Instagram Story.mp4"
 import { Link } from 'react-router-dom'
+import GridCard from '../Components/Card/GridCard'
+import OtherCatCard from '../Components/Card/OtherCatCard'
 
 const HomePage = () => {
 
 
+  function renderData(arr){
+    return arr.map((e)=>(
+      <Link to={`/products/${e.slug}`}><OtherCatCard item={e}></OtherCatCard></Link>
+    ))
+  }
+
+  const{Home,Other,Electronics,Women,Mens} = categorydata;
+   
   return (
     <>
-    <ImageCursol/>
-
+    
     <section className='container mx-auto'>
-     
-
-    <div className='flex gap-20'>
-     
-    <div>
-    <Category_container text={"Best in Mens Collection"} arr={categorydata.Mens}  />
-
-  <Category_container text={"Trending in Women"}  arr={categorydata.Women} />
-
-  <Category_container text={"Mobile & Laptop"} arr={categorydata.Electronics}  />
-    </div>
-
-
-
-{/* sales banner  */}
-    <Link to={"/sale"}>
-    <div className='bg-yellow-400 h-full w-80 '>
-   <video className='' src={banner} loop autoPlay></video>
-    </div>
-    </Link>
-
-
-    </div>
-
-
-
-    <br /> 
-
-    <Category_container text={"Home & Other "} arr={categorydata.Home} arr2={categorydata.Other} />
-
-    <br /> 
-   
+    <ImageCursol/>
     </section>
+ 
+  <div className='flex gap-3 container'>
+    {
+      Mens.map((e)=>(
+       <Link className='h-80  w-full ' to={`/products/${e.slug}`}> <GridCard key={nanoid()} item={e}/></Link>
+      ))
+    }
+  </div>
+
+<br />
+  <div className='p-2' >
+    <h1 className='text-4xl text-center font-bold text-cyan-800'>SHOP BY CATEGORY</h1>
+  </div>
+
+  <br />
+
+<div className='flex flex-wrap gap-5 ml-40 container'>
+{renderData(Other)};
+{renderData(Electronics)}
+{renderData(Home)}
+</div>
+
+
     </>
   )
 }

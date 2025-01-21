@@ -20,11 +20,17 @@ function useProductData(url) {
             } catch (err) {
                 setError(err);
             }
+            console.log("inside a fetchdata fn");
+            
         };
+
+        console.log("inside a useEffect ");
+        
 
         fetchData();
     }, [url]); 
    
+    console.log("inside a useProduct  ");
 
     return {
         data: data,

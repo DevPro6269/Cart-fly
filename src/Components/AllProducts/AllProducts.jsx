@@ -17,11 +17,11 @@ export const AllProducts = () => {
     
 
     useEffect(()=>{
-      if(data && !cachedData){
+      if(data ){
         setCachedData(data)
-        console.log(data);
       }
-    },[cachedData,data])
+
+    },[data])
     
     if(loading){
       return <div>Loading.....</div>
