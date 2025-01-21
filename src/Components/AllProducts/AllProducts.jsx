@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import UseFetchData from '../../Hooks/UseFetchData'
 import Card from '../Card/Card';
 import { Link, Links } from 'react-router-dom';
+import { useMemo,useState } from 'react';
 
 export const AllProducts = () => {
+  const [cachedData, setCachedData] = useState(null);
 
-    const {data,loading,error} = UseFetchData('https://dummyjson.com/products')
+  const {data,loading,error} = UseFetchData('https://dummyjson.com/products')
+   
+
+    const dayName = useMemo(() => {
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      return days[new Date().getDay()];
+    }, []);
+    
+
+    useEffect(()=>{
+      if(data && !cachedData){
+        setCachedData(data)
+        console.log(data);
+      }
+    },[cachedData,data])
     
     if(loading){
       return <div>Loading.....</div>
@@ -16,12 +32,9 @@ export const AllProducts = () => {
     if(!data){
       return <h1>No Products Available</h1>
     }
-const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const today = new Date();
-const dayName = days[today.getDay()];
-    console.log(data,error,loading);
     
-    let All_products = data.products
+  
+    
     
   return (
 
@@ -33,7 +46,7 @@ const dayName = days[today.getDay()];
 
     <section className='flex flex-wrap mx-auto container gap-4'>
 {
-  All_products.map((item)=>(
+  data&&data.products.map((item)=>(
     <Card key={item.id} item={item}/>
   ))
 }

@@ -12,8 +12,7 @@ function useProductData(url) {
                 const response = await fetch(url);
                 const resData = await response.json();
                 if (!resData.ok) {
-                    console.log(data);
-                    setLoading(false)
+                    setLoading(false)    
                     setData(resData);
                 } else {
                     throw new Error("Data not found");
@@ -25,7 +24,7 @@ function useProductData(url) {
 
         fetchData();
     }, [url]); 
-    // console.log("inside  fn");
+   
 
     return {
         data: data,

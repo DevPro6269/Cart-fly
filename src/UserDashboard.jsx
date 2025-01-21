@@ -5,6 +5,7 @@ import HomePage from './Pages/HomePage';
 import Cart from './Pages/Cart';
 import ProductDetails from './Pages/ProductDetails';
 import SalePage from './Pages/SalePage';
+import { Products } from './Pages/Products';
 
 const UserDashboard = () => {
   return (
@@ -18,6 +19,7 @@ const UserDashboard = () => {
         <Route path="/sale" element={<SalePage />} />
         <Route path="/productDetails/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/Products/:slug" element={<Products />} />
       </Routes>
     </Router>
   );

@@ -16,7 +16,7 @@ const ItemCart = () => {
   let discount = Math.floor(((actual_price - price) * 100) / actual_price);
   return (
     <>
-      <section className="container  flex gap-5 mx-auto">
+      <section className="container bg-white flex gap-5 mx-auto">
 
 
          {/* individual Cart item  */}

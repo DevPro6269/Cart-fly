@@ -23,7 +23,7 @@ function handleDelete(id){
     <>
       <section className="flex w-full border-2 gap-3 ">
         {/* Cart item left side content */}
-        <div className="h-44 flex flex-col border-2 w-44">
+        <div className="h-44 flex flex-col= w-44">
           <img className="h-full w-full" src={item.images[0]} alt="" />
         </div>
 

@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Category_card = ({item}) => {
-    console.log(item);
     
   return (
     <>
@@ -9,7 +8,7 @@ const Category_card = ({item}) => {
         <img 
         className='h-40 w-40 rounded-full border-2 border-white object-cover'
         src={item.src} alt="" />
-        <h1 className='text-xl  font-semibold text-center '>{item.category}</h1>
+        <h1 className='text-base  font-semibold text-center '>{item.category}</h1>
     </div>
     </>
   )
