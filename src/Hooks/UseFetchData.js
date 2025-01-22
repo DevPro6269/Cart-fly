@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 
 function useProductData(url) {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(true);  // Track loading state
+    let [data, setData] = useState([]);
+    let [error, setError] = useState(null);
+    let [loading, setLoading] = useState(true);  // Track loading state
 
     useEffect(() => {
         

@@ -1,54 +1,84 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addtocart,removefromcart,decreaseQuantity } from "../../Store/Cartslice";
+import {
+  addtocart,
+  removefromcart,
+  decreaseQuantity,
+} from "../../Store/Cartslice";
 
 const CartItem = ({ item }) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
+  function handlePlusclick(item) {
+    dispatch(addtocart(item));
+  }
 
-function handlePlusclick(item){
- dispatch(addtocart(item))  
-}
-
-function handleDelete(id){  
-  console.log(id);
-    dispatch(removefromcart(id))
-}
-
-
-
-
+  function handleDelete(id) {
+    dispatch(removefromcart(id));
+  }
+  function handleMinusClick(id) {
+    dispatch(decreaseQuantity(id));
+  }
 
   return (
     <>
-      <section className="flex w-full border-2 gap-3 ">
-        {/* Cart item left side content */}
-        <div className="h-44 flex flex-col= w-44">
-          <img className="h-full w-full" src={item.images[0]} alt="" />
+      <div className="flex gap-2 bg-white justify-around ">
+        <div className="w-1/5   p-2">
+          <img src={item.thumbnail} className="w-full" alt="" />
         </div>
 
-        {/* Cart item right side content */}
+        <div className="w-2/4 flex gap-4 flex-col  mt-3">
+          <h1 className="font-medium text-justify">{item.description}</h1>
 
-        <div className="flex flex-col gap-2 w-[450px] justify-center p-2">
-          <h1 className="overflow-hidden">{item.description}</h1>
-          <h1 className="text-green-400">{item.availabilityStatus}</h1>
-          <h1>{item.category}</h1>
-          <h1 className="text-slate-300">Free delivery</h1>
-
-          <div className="flex  justify-between">
-            <div className="border-yellow-400 self-center flex gap-3 border-2 rounded-lg w-fit px-4">
-              <button onClick={()=>{dispatch(decreaseQuantity(item.id))}} className={`font-bold text-xl ${item.quantity>1?"":"hidden"} `}>-</button>
-              <button onClick={()=>handleDelete(item.id)} className={` ${item.quantity>1?"hidden":"block"} `}>
-                <i className="fa-solid fa-trash"></i>
-              </button>
-              <span className="font-bold text-xl">{item.quantity}</span>
-              <button onClick={()=>handlePlusclick(item)} className="font-bold text-xl">+</button>
+          <div className="flex gap-5">
+            <p
+              onClick={() => {
+                handleDelete(item.id);
+              }}
+              className="self-start cursor-pointer p-2 text-red-600"
+            >
+              {" "}
+              <i className="fa-solid fa-x"></i> Remove From Cart
+            </p>
+            <div className="w-fit border-2 p-1 border-yellow-300 self-center   ">
+              <div className="flex justify-center ">
+                <div
+                  onClick={() => {
+                    handleMinusClick(item.id);
+                  }}
+                  className={`px-2 bg-slate-300 ${
+                    item.quantity > 1 ? "" : "hidden"
+                  } cursor-pointer hover:bg-black hover:text-white`}
+                >
+                  -
+                </div>
+                <div
+                  onClick={() => {
+                    handleDelete(item.id);
+                  }}
+                  className={`px-2 bg-slate-300 ${
+                    item.quantity > 1 ? "hidden" : ""
+                  } hover:bg-black cursor-pointer hover:text-white`}
+                >
+                  <i className="fa-solid fa-trash fa-xs"></i>
+                </div>
+                <div className="px-2">{item.quantity}</div>
+                <div
+                  onClick={() => {
+                    handlePlusclick(item);
+                  }}
+                  className="px-2 bg-slate-300 hover:bg-black hover:text-white"
+                >
+                  +
+                </div>
+              </div>
             </div>
-
-            <h1 className="font-semibold  "> Price: &#8377;{item.price}</h1>
           </div>
         </div>
-      </section>
+        <div className="flex justify-center   items-center">
+          <h1 className="text-2xl  font-bold">{Math.floor(item.price)}$</h1>
+        </div>
+      </div>
     </>
   );
 };

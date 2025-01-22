@@ -1,31 +1,30 @@
+import { nanoid } from '@reduxjs/toolkit';
 import React from 'react'
 
 const Reviews = ({review}) => {
     let ratingg = review.rating;
     let star = new Array(ratingg).fill(true)
-    let non_star = new Array(5-ratingg).fill(false)
+    let non_star = new Array((5-ratingg)).fill(false)
     
   return (
    <>
-   <section key={review.date} className='bg-gray-400 flex  flex-wrap flex-col justify-center items-center rounded-md p-2' >
-
-    
-        <h1 className='font-semibold'>{review.reviewerName.split(" ")[0]} </h1> 
- <div>
-     {
-        star.map((e,i)=>(
-            <span key={i} className="fa fa-star text-orange-300"></span>
-        ))
-     }
-     {
-         non_star.map((e,i)=>(
-            <span key={i} className="fa fa-star"></span>
-        ))
-     }
-
-      </div>
-    <p className='text-ellipsis overflow-hidden whitespace-nowrap'>"{review.comment}"</p>
-   </section>
+   <div className='p-4 shadow-xl hover:bg-slate-100 w-fit gap-2 flex flex-col items-center rounded-xl '>
+   <h1 className='text-xl '>  <i className="fa-solid fa-user"></i>  {review.reviewerName}  </h1>
+   <p className='text-gray-600'>{review.comment}</p>
+   <div>
+   {
+    star.map((e,i)=>(
+      <span key={nanoid()} className="fa fa-star text-xs text-orange-400"></span>
+    ))
+   }
+   {
+    non_star.map((e,i)=>(
+      <span key={nanoid()} className="fa fa-star text-xs "></span>
+    ))
+   }
+   </div>
+   </div> 
+   
    </>
   )
 }

@@ -11,7 +11,7 @@ const HomePage = () => {
 
   function renderData(arr){
     return arr.map((e)=>(
-      <Link to={`/products/${e.slug}`}><OtherCatCard item={e}></OtherCatCard></Link>
+      <Link key={nanoid()} to={`/products/${e.slug}`}><OtherCatCard item={e}></OtherCatCard></Link>
     ))
   }
 
@@ -27,7 +27,7 @@ const HomePage = () => {
   <div className='flex gap-3 container'>
     {
       Mens.map((e)=>(
-       <Link className='h-80  w-full ' to={`/products/${e.slug}`}> <GridCard key={nanoid()} item={e}/></Link>
+       <Link key={nanoid()} className='h-80   w-full ' to={`/products/${e.slug}`}> <GridCard key={nanoid()} item={e}/></Link>
       ))
     }
   </div>

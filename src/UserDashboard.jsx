@@ -6,12 +6,17 @@ import Cart from './Pages/Cart';
 import ProductDetails from './Pages/ProductDetails';
 import SalePage from './Pages/SalePage';
 import { Products } from './Pages/Products';
-
+import ScrollToTop from "./Components/ScrollToTop"
+import SearchPage from "./Pages/SearchPage"
+import Error from './Pages/Error';
+import Toast from './Components/Card/Toast';
 const UserDashboard = () => {
   return (
     <Router>
+      <ScrollToTop/>
       <Navbar />
       <Routes>
+
         {/* Default Route to Homepage */}
         <Route path="/" element={<HomePage />} />
         {/* Routes for Product Details and Cart */}
@@ -20,6 +25,9 @@ const UserDashboard = () => {
         <Route path="/productDetails/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/Products/:slug" element={<Products />} />
+        <Route path="/search/:value" element={<SearchPage />} />
+        <Route path='/*' element={<Error/>}/>
+
       </Routes>
     </Router>
   );

@@ -9,23 +9,26 @@ export const Products = () => {
     let {slug} = useParams()
     let url = `https://dummyjson.com/products/category/${slug}`
     
-     const{data,error,loading} = useProductData(url)
     
-     console.log(data);
-     
+    const{data,error,loading} = useProductData(url)
+    
     if(loading){
-        return <div class="spinner-border m-5" role="status">
-        <span class="visually-hidden">Loading...</span>
+      return (
+        <section className='h-screen w-screen justify-center flex items-center'>
+            <div className="spinner-border m-5" role="status">
+        <span className="visually-hidden">Loading...</span>
       </div>
-    }
-    if(error){
+          </section>
+        )
+      }
+      if(error){
         return <div>{error.msg}</div>
-    }
-    if(!data){
+      }
+      if(!data){
         return <div>No products Available</div>
-    }
-    
-    
+      }
+      
+      
       let dataArr= data.products
       
   return (
@@ -33,7 +36,7 @@ export const Products = () => {
     <section className=' flex flex-wrap gap-6'>
         {
          dataArr.map((e)=>(
-            <FilterCard item={e}/>
+            <FilterCard key={e.id} item={e}/>
          ))
         }
 

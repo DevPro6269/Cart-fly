@@ -3,7 +3,13 @@ import { AllProducts } from '../Components/AllProducts/AllProducts'
 
 const SalePage = ({}) => {
   return (
-    <AllProducts/>
+     <>
+     <section className='flex '>
+
+   <AllProducts/>
+     </section>
+   
+     </>
   )
 }
 

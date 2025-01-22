@@ -1,30 +1,42 @@
 import React, { useEffect } from 'react'
 import UseFetchData from '../../Hooks/UseFetchData'
 import Card from '../Card/Card';
-import { Link, Links } from 'react-router-dom';
+import { Link, Links, useFetcher } from 'react-router-dom';
 import { useMemo,useState } from 'react';
 
+
 export const AllProducts = () => {
-  const [cachedData, setCachedData] = useState(null);
+  const [sortOption, setSortOption] = useState('');
+  // const[selectedFilter,setSelectedFilter]=useState([])
+  
+  const handleChange = (e) => {
+    setSortOption(e.target.id);
+    // setSelectedFilter((prev)=>([...prev,e.target.id]))
+  };
 
-  const {data,loading,error} = UseFetchData('https://dummyjson.com/products')
-   
+  const url = useMemo(() => {
+    if (sortOption === 'highTolow') {
+      return "https://dummyjson.com/products?sortBy=price&order=desc";
+    }
+    if (sortOption === 'lowToHigh') {
+      return "https://dummyjson.com/products?sortBy=price&order=asc";
+    }
+    return "https://dummyjson.com/products"; 
+  }, [sortOption]);
 
-    const dayName = useMemo(() => {
-      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-      return days[new Date().getDay()];
-    }, []);
-    
 
-    useEffect(()=>{
-      if(data ){
-        setCachedData(data)
-      }
 
-    },[data])
+  let {data,loading,error} = UseFetchData(url)
+  
     
     if(loading){
-      return <div>Loading.....</div>
+      return   (
+        <section className='h-screen z-50 w-screen justify-center flex items-center'>
+          <div className="spinner-border m-5" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </div>
+        </section>
+      )
     }
     if(error){
       return <div>{error.message}</div>
@@ -33,24 +45,46 @@ export const AllProducts = () => {
       return <h1>No Products Available</h1>
     }
     
-  
-    
     
   return (
 
     <>
-   <section className=' border-2 container mx-auto border-orange-400'>
-    <h1 className='text-center text-2xl text-red-500 font-bold'>Deal of the {dayName}: Limited Time Only!</h1>
-   </section>
-   <br />
+    
+    {/* Filters section for data  */}
 
-    <section className='flex flex-wrap mx-auto container gap-4'>
+   <div className='w-1/4 p-4 sticky top-16 h-full border-2'>
+    <h1 className='text-2xl p-2'>Filter Products</h1> 
+    <hr />
+   
+    <h1 className='text-xl p-1'>Based on Price</h1>
+    <input id='highTolow' onChange={handleChange} name='price' type="radio" /> &nbsp;
+    <label htmlFor="highTolow">High To Low</label>
+    <br />
+
+    <input id='lowToHigh'onChange={handleChange} name='price' type="radio" /> &nbsp;
+    <label htmlFor="lowToHigh">Low To High</label>
+     <br />
+    <input id='popular' onChange={handleChange} name='price' type="radio" /> &nbsp;
+    <label htmlFor="popular">Popularity</label>
+
+    </div>
+
+
+   {/* All products */}
+   
+<div className='w-3/4'>
+    <section className='flex flex-wrap  justify-center  gap-4'>
 {
   data&&data.products.map((item)=>(
     <Card key={item.id} item={item}/>
   ))
 }
     </section>
+
+
+
+  </div>
+ 
     </>
   )
 }

@@ -8,7 +8,14 @@ const ItemCart = () => {
   let cart = useSelector((state) => state.cart.item);
 
   if (!cart.length > 0) {
-    return <div>No Products Avialable</div>;
+    return (
+      <>
+      <section className="flex justify-center flex-col items-center h-screen w-full">
+       <img src={cartimg} className="h-80 w-80" alt="" />
+       <h1 className="text-2xl font-bold"> Your Cart is Empty</h1>
+      </section>
+      </>
+    );
   }
   
   let price = Math.floor(cart.reduce((acc, curr) => (curr.price*curr.quantity) + acc, 0));
@@ -41,7 +48,7 @@ const ItemCart = () => {
 
           <ItemandPrice name={`Discount`} price={`${discount}%`} />
 
-          <ItemandPrice name={"Buy more & save more"} price={100} />
+          <ItemandPrice name={"Buy more & save more"} price={`${100}$`} />
 
           <ItemandPrice name={"Delivery Charges"} price={"free"} />
 
@@ -49,12 +56,12 @@ const ItemCart = () => {
 
           <div className="flex font-bold text-xl justify-between">
             <h1>Total Price</h1>
-            <h1>{price}</h1>
+            <h1>{price}$</h1>
           </div>
 
           <hr />
           <h1 className="text-green-600 text-xl">
-            You will save &#8377;{actual_price - price} on this order{" "}
+            You will save {actual_price - price}$ on this order{" "}
           </h1>
         </div>
       </section>
