@@ -1,7 +1,7 @@
 import React from 'react'
 import { AllProducts } from '../Components/AllProducts/AllProducts'
 
-const SalePage = ({}) => {
+const ProductList = ({}) => {
   return (
      <>
      <section className='flex '>
@@ -13,4 +13,4 @@ const SalePage = ({}) => {
   )
 }
 
-export default SalePage
+export default ProductList

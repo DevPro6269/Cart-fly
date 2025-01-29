@@ -4,10 +4,12 @@ import Reviews from "./Reviews";
 import { useParams } from "react-router-dom";
 import ExtraInformation from "./ExtraInformation";
 import { nanoid } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { addtocart } from "../../Store/Cartslice";
 
 const ShowPage = () => {
   let {id} = useParams();
-
+  let dispatch = useDispatch();
 
   let { data, loading, error } = UseFetchData(
     `https://dummyjson.com/products/${id}`
@@ -60,7 +62,7 @@ const ShowPage = () => {
             <p className="text-gray-600 font-thin">Free Delivery <i className="fa-solid fa-truck"></i> </p>
            <h1 className={`${data.availabilityStatus=="In Stock"?"text-green-500":"text-red-500"} font-semibold`} >{data.availabilityStatus}</h1>
            <h1>{data.returnPolicy}</h1>
-           <button className="bg-red-600 mt-2 text-white rounded-lg font-semibold h-10 w-40 hover:bg-black p-2" > 
+           <button onClick={()=>dispatch(addtocart(data))} disabled={data.availabilityStatus==="Out of Stock"} className="bg-red-600 mt-2 text-white rounded-lg font-semibold h-10 w-40 disabled:hidden hover:bg-black p-2" > 
            <i className="fa-solid fa-bag-shopping"></i> &nbsp;
             Add to Cart</button>
            

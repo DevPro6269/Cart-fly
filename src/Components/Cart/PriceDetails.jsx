@@ -1,7 +1,7 @@
 import React from 'react'
 import { ItemandPrice } from './ItemandPrice'
 import getPrice from '../../Helper/getPrice'
-
+import { Link } from 'react-router-dom'
 const PriceDetails = ({total,cart}) => {
 
 let coupon = total>100?10:0;
@@ -26,9 +26,11 @@ let mrp = getPrice(cart)
 
     <h1 className='text-green-500 text-lg'>You will Save {Math.floor(mrp-total)+coupon}$ on this Order</h1>
 
-    <button className='self-end bg-red-500 hover:bg-black font-semibold text-white p-2 px-3 rounded-lg'>
-        PLACE ORDER
+   <Link to={"/checkout"}>
+       <button className='self-end w-full bg-red-500 hover:bg-black font-semibold text-white p-2 px-3 rounded-lg'>
+        PROCEED TO CHECKOUT
         </button>
+   </Link>
    </>
   )
 }

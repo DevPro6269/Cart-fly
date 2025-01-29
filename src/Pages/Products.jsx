@@ -2,9 +2,8 @@ import React, { useState ,useEffect, useCallback} from 'react'
 import { useParams } from 'react-router-dom'
 import useProductData from "../Hooks/UseFetchData"
 import FilterCard from '../Components/Card/FilterCard'
-import Toast from "../Components/Card/Toast"
 
-export const Products = () => {
+ const Products = () => {
     
     let {slug} = useParams()
     let url = `https://dummyjson.com/products/category/${slug}`
@@ -43,3 +42,4 @@ export const Products = () => {
     </section>
   )
 }
+export default Products;

@@ -26,10 +26,15 @@ let dispatch = useDispatch()
         <span className="text-sm text-slate-900 line-through">$699</span>
       </p>
     </div>
-    <div href="#" onClick={()=>dispatch(addtocart(item))} className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+    {
+      
+      item.availabilityStatus!=="Out of Stock" ? <div href="#" onClick={()=>dispatch(addtocart(item))} className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
       
       Add to cart
-      </div>
+      </div>:<div href="#" className=" cursor-not-allowed flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-red-500 outline outline-red-500 hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+      
+      Out of Stock
+      </div>}
     
   </div>
 </div>

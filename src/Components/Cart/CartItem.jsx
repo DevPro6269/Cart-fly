@@ -22,7 +22,7 @@ const CartItem = ({ item }) => {
 
   return (
     <>
-      <div className="flex gap-2 bg-white justify-around ">
+      <div className="flex gap-2 shadow-md bg-white justify-around ">
         <div className="w-1/5   p-2">
           <img src={item.thumbnail} className="w-full" alt="" />
         </div>

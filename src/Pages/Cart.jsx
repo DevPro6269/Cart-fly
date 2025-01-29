@@ -1,5 +1,4 @@
 import React from 'react'
-import ItemCart from '../Components/Cart/ItemCart'
 import PriceDetails from '../Components/Cart/PriceDetails'
 import CartItem from '../Components/Cart/CartItem'
 import { useSelector } from 'react-redux'
@@ -28,23 +27,27 @@ const Cart = () => {
     <h1 className='text-2xl ml-32 font-semibold'>
       SHOPING CART &nbsp;
       <i className="fa-solid text-3xl fa-bag-shopping"></i></h1>
+      
       <br />
    <section className='flex gap-4  container'>
     {/* Cart Summary and Products */}
-    <div className='w-3/4 flex flex-col bg-slate-100 gap-6'>
+    <div className='w-3/4 flex p-2 h-[500px] outline-red-200 outline overflow-auto flex-col bg-slate-100 gap-6'>
     {
       cart.map((e)=>(
         <CartItem key={nanoid()} item={e}/>
       ))
     }
+
+    
     </div>
 
       {/* Price details */}
-    <div className='w-1/4 flex flex-col gap-3 p-3 shadow-xl rounded-xl  '>
+    <div className='w-1/4 flex h-fit sticky top-20 flex-col gap-3 p-3 shadow-xl rounded-xl  '>
      <PriceDetails total={total_price} cart={cart} />
     </div>
 
    </section>
+  
     </>
   )
 }

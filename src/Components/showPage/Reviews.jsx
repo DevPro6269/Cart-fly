@@ -8,7 +8,7 @@ const Reviews = ({review}) => {
     
   return (
    <>
-   <div className='p-4 shadow-xl hover:bg-slate-100 w-fit gap-2 flex flex-col items-center rounded-xl '>
+   <div className='p-4 shadow-xl hover:scale-105 hover:bg-slate-100 w-fit gap-2 flex flex-col items-center rounded-xl '>
    <h1 className='text-xl '>  <i className="fa-solid fa-user"></i>  {review.reviewerName}  </h1>
    <p className='text-gray-600'>{review.comment}</p>
    <div>

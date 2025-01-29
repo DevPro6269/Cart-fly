@@ -42,7 +42,7 @@ function handleClick(){
           <li className='font-semibold  text-xl hover:text-red-500'> <i>Home</i></li>  
             </Link>
           
-           <Link to={"/sale"}>
+           <Link to={"/ProductList"}>
            <li className='font-semibold  text-xl hover:text-red-500'> <i>Products</i></li>
            </Link>
 
@@ -50,7 +50,9 @@ function handleClick(){
             <li className='font-semibold  text-xl hover:text-red-500'> <i>Orders</i></li>
           </Link>
         
-           
+          <Link to={"/addresses"} >
+            <li className='font-semibold  text-xl hover:text-red-500'> <i>My address</i></li>
+          </Link>
            
 
         </ul>
