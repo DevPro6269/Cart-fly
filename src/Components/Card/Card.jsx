@@ -13,7 +13,7 @@ let dispatch = useDispatch()
     <>
    
    <div className="group my-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
-  <Link to={`/productDetails/${item.id}`} className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
+  <Link to={`/productDetails/${item._id}`} className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
     <img className="peer absolute top-0 right-0 h-full w-full object-cover" src={item.images[0]} alt="product image" /> 
   </Link>
   <div className="mt-4 px-5 pb-5">

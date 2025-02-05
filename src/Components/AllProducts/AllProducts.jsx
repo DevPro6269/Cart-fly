@@ -22,17 +22,18 @@ export const AllProducts = () => {
     if (sortOption === 'lowToHigh') {
       return "https://dummyjson.com/products?sortBy=price&order=asc";
     }
-    return "https://dummyjson.com/products"; 
+    return "http://localhost:8000/api/products"; 
   }, [sortOption]);
   
   
   
   let {data,loading,error} = UseFetchData(url)
+  console.log(data);
   
   useEffect(()=>{
     if(data){
-      setProducts(data.products);
-      setSearchres(data.products)
+      setProducts(data.data);
+      setSearchres(data.data)
     }
 
   },[data])
@@ -106,7 +107,7 @@ export const AllProducts = () => {
     <section className='flex flex-wrap  justify-center  gap-4'>
 {
   searchres&&searchres.map((item)=>(
-    <Card key={item.id} item={item}/>
+    <Card key={item._id} item={item}/>
   ))
 }
     </section>

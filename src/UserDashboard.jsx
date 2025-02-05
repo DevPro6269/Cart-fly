@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
-import AddressForm from './Pages/AddressForm';
+import AddressForm from './Pages/AddressForm'
 // Lazy load the components
 const Navbar = lazy(() => import('./Components/Header/Navbar'));
 const HomePage = lazy(() => import('./Pages/HomePage'));
@@ -12,9 +12,12 @@ const ScrollToTop = lazy(() => import("./Components/ScrollToTop"));
 const SearchPage = lazy(() => import("./Pages/SearchPage"));
 const Error = lazy(() => import('./Pages/Error'));
 const Checkout = lazy(() => import('./Pages/Checkout'));
+const SignUp = lazy(()=>import("./Pages/SignUp"))
 // const Addresform = lazy(()=>import("./Pages/AddressForm"))
 const AllAddress = lazy(()=>import("./Pages/AllAddress"))
 const EditAddress = lazy(()=>import("./Pages/EditAddress"))
+const Login = lazy(()=>import("./Pages/Login"))
+
 
 const UserDashboard = () => {
   return (
@@ -117,6 +120,27 @@ const UserDashboard = () => {
             </Suspense>
           } 
         />
+
+
+          <Route 
+          path='/signup' 
+          element={
+            <Suspense fallback={<div>Loading Error...</div>}>
+              <SignUp />
+            </Suspense>
+          } 
+        />
+
+          <Route 
+          path='/login'
+          element={
+            <Suspense fallback={<div>Loading.....</div>}>
+              <Login/>
+            </Suspense>
+          }
+          />
+            
+          
 
 
          <Route 

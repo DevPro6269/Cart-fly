@@ -7,14 +7,19 @@ import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { addtocart } from "../../Store/Cartslice";
 
-const ShowPage = () => {
-  let {id} = useParams();
+const ShowPage = ({id}) => {
+ const[product,setProduct]=useState(null)
+
   let dispatch = useDispatch();
+console.log(id);
 
   let { data, loading, error } = UseFetchData(
-    `https://dummyjson.com/products/${id}`
+    `http://localhost:8000/api/product/${id}`
   );
-
+  useEffect(()=>{
+    setProduct(data.data)
+  },[data])
+    
   if (loading) {
     return (
       <section className='h-screen w-screen justify-center flex items-center'>
@@ -28,18 +33,18 @@ const ShowPage = () => {
     return <div>{error.msg}</div>;
   }
 
-  if (!data) {
+  if (!product) {
     return <div>No Data Available</div>;
   }
 
-  let Price = Math.floor(data.price);
-  let discount = Math.floor(data.discountPercentage)
+  let Price = Math.floor(product.price);
+  let discount = Math.floor(product.discountPercentage)
 
   return (
     <>
       <section className="flex mt-4">
         <div className="w-2/5 sticky  h-fit top-20 ">
-          <img src={data.thumbnail} alt="" className="h-[500px]" />
+          <img src={product.thumbnail} alt="" className="h-[500px]" />
         </div>
 
 
@@ -47,35 +52,35 @@ const ShowPage = () => {
 
         {/* Title and Category in div  */}
           <div className="flex gap-2 items-center"> 
-          <h1 className="text-3xl font-semibold" >{data.title}</h1>
-          <p className="text-xl ">{data.rating}</p>
+          <h1 className="text-3xl font-semibold" >{product.title}</h1>
+          <p className="text-xl ">{product.rating}</p>
           <span className="fa fa-star text-xl text-orange-400"></span>
           </div>
-            <p className="font-semibold text-gray-700">{data.brand}</p>
-           <p className=" w-4/5">{data.description}</p>
+            <p className="font-semibold text-gray-700">{product.brand}</p>
+           <p className=" w-4/5">{product.description}</p>
            {/* Price and discount Information */}
             <div className="flex">
-            <h1 className="text-bold text-2xl">{Math.floor(data.price)}$</h1> &nbsp;
+            <h1 className="text-bold text-2xl">{Math.floor(product.price)}$</h1> &nbsp;
             <span className=" text-lg line-through">{Math.floor((Price*100)/(100-discount))}$</span> &nbsp;
             <h1 className="text-lg font-medium text-green-500">{discount}% OFF</h1>
             </div>
             <p className="text-gray-600 font-thin">Free Delivery <i className="fa-solid fa-truck"></i> </p>
-           <h1 className={`${data.availabilityStatus=="In Stock"?"text-green-500":"text-red-500"} font-semibold`} >{data.availabilityStatus}</h1>
-           <h1>{data.returnPolicy}</h1>
-           <button onClick={()=>dispatch(addtocart(data))} disabled={data.availabilityStatus==="Out of Stock"} className="bg-red-600 mt-2 text-white rounded-lg font-semibold h-10 w-40 disabled:hidden hover:bg-black p-2" > 
+           <h1 className={`${product.availabilityStatus=="In Stock"?"text-green-500":"text-red-500"} font-semibold`} >{data.availabilityStatus}</h1>
+           <h1>{product.returnPolicy}</h1>
+           <button onClick={()=>dispatch(addtocart(data))} disabled={product.availabilityStatus==="Out of Stock"} className="bg-red-600 mt-2 text-white rounded-lg font-semibold h-10 w-40 disabled:hidden hover:bg-black p-2" > 
            <i className="fa-solid fa-bag-shopping"></i> &nbsp;
             Add to Cart</button>
            
 
              {/* Extra Information */}
-             <ExtraInformation item={data}/>
+             <ExtraInformation item={product}/>
 
            {/* Rating and reviews  */}
 
            <div className="flex justify-center gap-2 flex-wrap">
                 <h1 className="text-center text-xl w-full">Rating And Reviews</h1>
               {
-                data.reviews.map((e)=>(<Reviews key={nanoid()} review={e} />))
+                product.reviews.map((e)=>(<Reviews key={nanoid()} review={e} />))
               }
 
            </div>

@@ -1,28 +1,33 @@
-import React from 'react'
-import ImageCursol from '../Components/Header/ImageCursol'
+import React, { useEffect, useState } from 'react'
 import categorydata from "../Utils/ProductsData"
 import { nanoid } from '@reduxjs/toolkit'
 import { Link } from 'react-router-dom'
 import GridCard from '../Components/Card/GridCard'
 import OtherCatCard from '../Components/Card/OtherCatCard'
+import useProductData from '../Hooks/UseFetchData'
 
 const HomePage = () => {
 
+  const[error,setdata]= useState(null)
 
   function renderData(arr){
     return arr.map((e)=>(
       <Link key={nanoid()} to={`/products/${e.slug}`}><OtherCatCard item={e}></OtherCatCard></Link>
     ))
   }
+  let {error2} =  useProductData("http://localhost:8000/api")
+useEffect(()=>{
+   setdata(error2)
+},[error2])
+ 
+console.log(error);
 
   const{Home,Other,Electronics,Women,Mens} = categorydata;
    
   return (
     <>
     
-    <section className='container mx-auto'>
-    <ImageCursol/>
-    </section>
+    
  
   <div className='flex gap-3 container'>
     {

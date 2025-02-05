@@ -1,42 +1,50 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
-function useProductData(url) {
-    let [data, setData] = useState([]);
-    let [error, setError] = useState(null);
-    let [loading, setLoading] = useState(true);  // Track loading state
+function useFetchData(url, method = "GET", data = null, headers = null) {
+  const [responseData, setResponseData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        
-        const fetchData = async () => {
-            try {
-                const response = await fetch(url);
-                const resData = await response.json();
-                if (!resData.ok) {
-                    setLoading(false)    
-                    setData(resData);
-                } else {
-                    throw new Error("Data not found");
-                }
-            } catch (err) {
-                setError(err);
-            }
-            console.log("inside a fetchdata fn");
-            
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);  
+
+      try {
+        const config = {
+          method,
+          url,
+          headers,
         };
 
-        console.log("inside a useEffect ");
-        
+        // Include body only for POST, PUT, or PATCH requests
+        if (method === "POST" || method === "PUT" || method === "PATCH") {
+          config.data = data;
+        }
 
-        fetchData();
-    }, [url]); 
-   
-    console.log("inside a useProduct  ");
+        const response = await axios(config);
 
-    return {
-        data: data,
-        err: error,
-        loading:loading,
+        // Check if the response has data, and set it to state
+        if (response && response.data) {
+          setResponseData(response.data);
+        } else {
+          throw new Error("Empty response from server");
+        }
+      } catch (err) {
+        // Handle any errors that happen during the request
+        setError(err.message || "An error occurred");
+      } finally {
+        setLoading(false);  // Set loading to false after the request is finished
+      }
     };
+
+    if (url) {
+      fetchData();
+    }
+  }, [url, method, data, headers]); 
+
+  return { data: responseData, loading, error };
 }
 
-export default useProductData;
+export default useFetchData;
