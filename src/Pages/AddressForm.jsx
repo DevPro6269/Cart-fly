@@ -18,12 +18,15 @@ const AddressForm = () => {
     id:nanoid(),
     default:false,
   });
+
   function handleOnChange(e) {
     const { name, value } = e.target;
     setAddress((prev) => ({
       ...prev,
       [name]: value,
     }));
+    console.log(address);
+    
   }
 
   function formValidation() {

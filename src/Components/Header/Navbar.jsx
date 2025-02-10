@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { use } from 'react'
 // import img from "../assets/Black and White Star Y2k Streetwear Logo.png"
 import { useSelector } from 'react-redux'
 import {Link} from "react-router-dom"
@@ -14,14 +15,14 @@ function handleClick(){
   naviagte(`/search/${value}`)
   setValue("")
 }
-
-
+  const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn)
+  const user = useSelector((state)=>state.auth.user)
   let cart = useSelector((state)=>state.cart.item)
    let stock = cart.reduce((acc,curr)=>acc+curr.quantity,0)
-  
+   
   return (
     <>
-    <nav className='bg-black flex z-50 justify-between  fixed p-3 w-full'>
+    <nav className='bg-white flex z-50 justify-between border-b-2 fixed p-3 w-full'>
 
         {/* nav logo */}
         <div className='text-white'>
@@ -37,23 +38,22 @@ function handleClick(){
 
 
          {/* nav link list */}
-          <ul className='flex text-white  ml-10 gap-3'>
+          <ul className='flex text-black  ml-10 gap-3'>
             <Link to={"/"}>
           <li className='font-semibold  text-xl hover:text-red-500'> <i>Home</i></li>  
             </Link>
           
-           <Link to={"/ProductList"}>
-           <li className='font-semibold  text-xl hover:text-red-500'> <i>Products</i></li>
+           <Link to={"/new/product"}>
+           <li className='font-semibold  text-xl hover:text-red-500'> <i>{isLoggedIn?"add new product":""}</i></li>
            </Link>
-
-          <Link >
-            <li className='font-semibold  text-xl hover:text-red-500'> <i>Orders</i></li>
-          </Link>
         
           <Link to={"/addresses"} >
             <li className='font-semibold  text-xl hover:text-red-500'> <i>My address</i></li>
           </Link>
            
+
+          <li className='font-semibold  text-xl hover:text-red-500'> <i>{user&&user.username}</i></li>
+
 
         </ul>
        
@@ -64,7 +64,7 @@ function handleClick(){
         {/* item cart */}
 
         <Link to={"/cart"}>
-        <div className='text-white  mr-5'>
+        <div className='  mr-5'>
             <span className={ `bg-orange-500 px-1 ${stock?"inline":"hidden"} text-sm rounded-full absolute top-1 right-7`}>{stock}</span>
             <i className="fa-solid fa-xl  fa-cart-shopping"></i>
         </div>
