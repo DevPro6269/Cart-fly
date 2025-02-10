@@ -2,43 +2,50 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { addtocart } from '../../Store/Cartslice'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 const Card = ({
     item
 }) => {
 
-let dispatch = useDispatch()
-  
+const dispatch = useDispatch()
+const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn)
+
+function handleClick(){
+  console.log(document.cookie);
+  if(isLoggedIn){
+    axios.post("http://localhost:8000/api/cart",item,{withCredentials:true}).then((res)=>{
+      console.log(res)
+    })
+  }
+}
+
+
+
   return (
     <>
-   
-   <div className="group my-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
-  <Link to={`/productDetails/${item._id}`} className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
-    <img className="peer absolute top-0 right-0 h-full w-full object-cover" src={item.images[0]} alt="product image" /> 
+<div className="relative m-10 w-full max-w-xs overflow-hidden rounded-lg bg-white shadow-md">
+  <Link className='flex justify-center' to="#">
+    <img className="h-60 rounded-t-lg object-cover" src={item.thumbnail} alt="product image" />
   </Link>
+  <span className="absolute top-0 left-0 w-28 translate-y-4 -translate-x-6 -rotate-45 bg-black text-center text-sm text-white">Sale</span>
   <div className="mt-4 px-5 pb-5">
     <a href="#">
-      <h5 className="text-xl tracking-tight text-slate-900">{item.title}</h5>
+    <h1 className='text-ellipsis font-semibold overflow-hidden whitespace-nowrap text-xl '>{item.title}</h1>
     </a>
-    <div className="mt-2 mb-5 flex items-center justify-between">
+    <div className="flex flex-col gap-2 justify-between">
       <p>
-        <span className="text-3xl font-bold text-slate-900">${item.price}</span>
-        <span className="text-sm text-slate-900 line-through">$699</span>
+        <span className="text-2xl font-bold text-slate-900">$249</span>
+        <span className="text-sm text-slate-900 line-through">$299</span>
       </p>
+      <Link >   
+      <button href="#" onClick={handleClick} className="flex items-center rounded-md bg-slate-900 w-full px-5 py-2.5 text-center font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+        Add to cart &nbsp; <i className="fa-solid fa-cart-shopping"></i> </button >
+      </Link>
     </div>
-    {
-      
-      item.availabilityStatus!=="Out of Stock" ? <div href="#" onClick={()=>dispatch(addtocart(item))} className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-      
-      Add to cart
-      </div>:<div href="#" className=" cursor-not-allowed flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-red-500 outline outline-red-500 hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-      
-      Out of Stock
-      </div>}
-    
   </div>
 </div>
-
 
     </>
   )
