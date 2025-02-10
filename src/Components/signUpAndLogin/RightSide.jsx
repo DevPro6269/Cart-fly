@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import InfoFeild from './InfoFeild';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setLoggedIn } from '../../Store/AuthSlice';
 
 const RightSide = () => {
     const [error, setError] = useState(null);
@@ -11,7 +13,8 @@ const RightSide = () => {
         email: "",
         password: ""
     });
-
+    
+    const dispatch = useDispatch()
     const navigate = useNavigate();
 
     // Log userData whenever it changes (for debugging)
@@ -36,6 +39,7 @@ const RightSide = () => {
             .then(function (response) {
                 if (response && response.data) {
                     navigate("/home"); // Navigate to home page after success
+                     dispatch(setLoggedIn(response.data.data))
                 }
             })
             .catch(function (error) {

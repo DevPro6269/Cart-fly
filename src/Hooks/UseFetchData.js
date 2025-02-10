@@ -28,11 +28,13 @@ function useFetchData(url, method = "GET", data = null, headers = null) {
         // Check if the response has data, and set it to state
         if (response && response.data) {
           setResponseData(response.data);
+          
         } else {
           throw new Error("Empty response from server");
         }
       } catch (err) {
         // Handle any errors that happen during the request
+        
         setError(err.message || "An error occurred");
       } finally {
         setLoading(false);  // Set loading to false after the request is finished
