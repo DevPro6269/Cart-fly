@@ -1,6 +1,9 @@
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import AddressForm from './Pages/AddressForm'
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import NewProduct from './Pages/NewProduct';
 // Lazy load the components
 const Navbar = lazy(() => import('./Components/Header/Navbar'));
 const HomePage = lazy(() => import('./Pages/HomePage'));
@@ -20,22 +23,33 @@ const Login = lazy(()=>import("./Pages/Login"))
 
 
 const UserDashboard = () => {
+  const isLoggedIn = useSelector((state)=>state.auth.isLoggedIn)
+  console.log(isLoggedIn);
+  
   return (
     <Router>
       <ScrollToTop />
       <Suspense fallback={<div>Loading Navbar...</div>}>
         <Navbar />
       </Suspense>
+
+
+
       <Routes>
         {/* Default Route to Homepage */}
         <Route 
           path="/" 
           element={
             <Suspense fallback={<div>Loading HomePage...</div>}>
-              <HomePage />
+           {
+            isLoggedIn?<HomePage/>:<SignUp/>
+           }
+             
             </Suspense>
           } 
         />
+
+
         {/* Routes for Product Details and Cart */}
         <Route 
           path="/home" 
@@ -126,7 +140,7 @@ const UserDashboard = () => {
           path='/signup' 
           element={
             <Suspense fallback={<div>Loading Error...</div>}>
-              <SignUp />
+              <SignUp /> 
             </Suspense>
           } 
         />
@@ -139,10 +153,17 @@ const UserDashboard = () => {
             </Suspense>
           }
           />
-            
-          
 
-
+<Route 
+          path='/new/product'
+          element={
+            <Suspense fallback={<div>Loading.....</div>}>
+              <NewProduct/>
+            </Suspense>
+          }
+          />
+      
+    
          <Route 
           path='*' 
           element={

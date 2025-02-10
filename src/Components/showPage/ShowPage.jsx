@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import UseFetchData from "../../Hooks/UseFetchData";
 import Reviews from "./Reviews";
-import { useParams } from "react-router-dom";
-import ExtraInformation from "./ExtraInformation";
 import { nanoid } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { addtocart } from "../../Store/Cartslice";
 
 const ShowPage = ({id}) => {
- const[product,setProduct]=useState(null)
+ const[product,setProduct]=useState([])
 
   let dispatch = useDispatch();
 console.log(id);
@@ -16,10 +14,13 @@ console.log(id);
   let { data, loading, error } = UseFetchData(
     `http://localhost:8000/api/product/${id}`
   );
-  useEffect(()=>{
-    setProduct(data.data)
+  useEffect(()=>{ 
+    if(data&&data.data){
+      setProduct(data.data)
+    }
   },[data])
     
+  
   if (loading) {
     return (
       <section className='h-screen w-screen justify-center flex items-center'>
@@ -38,7 +39,7 @@ console.log(id);
   }
 
   let Price = Math.floor(product.price);
-  let discount = Math.floor(product.discountPercentage)
+  let discount = Math.floor(product.discount)
 
   return (
     <>
@@ -65,22 +66,22 @@ console.log(id);
             <h1 className="text-lg font-medium text-green-500">{discount}% OFF</h1>
             </div>
             <p className="text-gray-600 font-thin">Free Delivery <i className="fa-solid fa-truck"></i> </p>
-           <h1 className={`${product.availabilityStatus=="In Stock"?"text-green-500":"text-red-500"} font-semibold`} >{data.availabilityStatus}</h1>
+           <h1 className={`${product.Availability=="In Stock"?"text-green-500":"text-red-500"} font-semibold`} >{product.Availability}</h1>
            <h1>{product.returnPolicy}</h1>
-           <button onClick={()=>dispatch(addtocart(data))} disabled={product.availabilityStatus==="Out of Stock"} className="bg-red-600 mt-2 text-white rounded-lg font-semibold h-10 w-40 disabled:hidden hover:bg-black p-2" > 
+           <button onClick={()=>dispatch(addtocart(data))} disabled={product.Availability==="Out of Stock"} className="bg-red-600 mt-2 text-white rounded-lg font-semibold h-10 w-40 disabled:hidden hover:bg-black p-2" > 
            <i className="fa-solid fa-bag-shopping"></i> &nbsp;
             Add to Cart</button>
            
 
              {/* Extra Information */}
-             <ExtraInformation item={product}/>
+             {/* <ExtraInformation item={product}/> */}
 
            {/* Rating and reviews  */}
 
            <div className="flex justify-center gap-2 flex-wrap">
                 <h1 className="text-center text-xl w-full">Rating And Reviews</h1>
               {
-                product.reviews.map((e)=>(<Reviews key={nanoid()} review={e} />))
+              product.reviews && product.reviews.map((e)=>(<Reviews key={nanoid()} review={e} />))
               }
 
            </div>
