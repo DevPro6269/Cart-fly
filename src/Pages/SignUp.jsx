@@ -2,6 +2,7 @@ import React from 'react'
 import LeftSide from '../Components/signUpAndLogin/LeftSide'
 import RightSide from '../Components/signUpAndLogin/RightSide'
 
+
 const SignUp = () => {
   return (
     <>

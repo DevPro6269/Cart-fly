@@ -22,7 +22,7 @@ export const AllProducts = () => {
     if (sortOption === 'lowToHigh') {
       return "https://dummyjson.com/products?sortBy=price&order=asc";
     }
-    return "http://localhost:8000/api/products"; 
+    return "http://localhost:8000/api/product"; 
   }, [sortOption]);
   
   
@@ -78,7 +78,7 @@ export const AllProducts = () => {
     
     {/* Filters section for data  */}
 
-   <div className='w-1/4 p-4 sticky top-16 h-full border-2'>
+   {/* <div className='w-1/4 p-4 sticky top-16 h-full border-2'>
     <h1 className='text-2xl p-2'>Filter Products</h1> 
     <hr />
    
@@ -93,7 +93,7 @@ export const AllProducts = () => {
     <input id='popular' onChange={handleChange} name='price' type="radio" /> &nbsp;
     <label htmlFor="popular">Popularity</label>
 
-    </div>
+    </div> */}
 
 
    {/* All products */}

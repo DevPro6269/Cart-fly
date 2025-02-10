@@ -1,56 +1,84 @@
 import React, { useEffect, useState } from 'react'
-import categorydata from "../Utils/ProductsData"
-import { nanoid } from '@reduxjs/toolkit'
-import { Link } from 'react-router-dom'
-import GridCard from '../Components/Card/GridCard'
 import OtherCatCard from '../Components/Card/OtherCatCard'
-import useProductData from '../Hooks/UseFetchData'
+import GridCategory from '../Components/HomePage/GridCategory'
+import ImageCursol from '../Components/HomePage/ImageCursol'
+import axios from 'axios'
+import Headline from '../Components/HomePage/Headline'
+import Card from '../Components/Card/Card'
 
 const HomePage = () => {
 
-  const[error,setdata]= useState(null)
+  const[products,setProducts]=useState([])
+  const[categories,SetCategories]=useState([]);
+  const[error,setError]= useState(null)
 
-  function renderData(arr){
-    return arr.map((e)=>(
-      <Link key={nanoid()} to={`/products/${e.slug}`}><OtherCatCard item={e}></OtherCatCard></Link>
-    ))
-  }
-  let {error2} =  useProductData("http://localhost:8000/api")
-useEffect(()=>{
-   setdata(error2)
-},[error2])
+  
+  useEffect(()=>{
+    axios("http://localhost:8000/api/category").then((respone)=>{
+      if(respone&&respone.data){
+        SetCategories(respone.data.data)
+      }
+    })
+    .catch((err)=>{
+      setError(err)
+    })
+
+    axios("http://localhost:8000/api/product").then((respone)=>{
+      if(respone&&respone.data){
+        setProducts(respone.data.data)
+      }
+    })
+    .catch((err)=>{
+      setError(err)
+    })
+  },[])
  
-console.log(error);
-
-  const{Home,Other,Electronics,Women,Mens} = categorydata;
+if(products.length>8){
+  products.length=8
+}
    
   return (
     <>
     
-    
- 
-  <div className='flex gap-3 container'>
-    {
-      Mens.map((e)=>(
-       <Link key={nanoid()} className='h-80   w-full ' to={`/products/${e.slug}`}> <GridCard key={nanoid()} item={e}/></Link>
-      ))
-    }
-  </div>
+    <ImageCursol/>
 
-<br />
-  <div className='p-2' >
-    <h1 className='text-4xl text-center font-bold text-cyan-800'>SHOP BY CATEGORY</h1>
-  </div>
+<br /> <br />
+ 
+ <Headline name="categories" title="Browse By Category" />
 
   <br />
 
-<div className='flex flex-wrap gap-5 ml-40 container'>
-{renderData(Other)};
-{renderData(Electronics)}
-{renderData(Home)}
+<div className='flex flex-wrap gap-5  container'>
+{
+  categories && categories.map((item,index)=>{
+    return <OtherCatCard key={index} data = {item}/>
+  })
+}
 </div>
 
+ 
+ <br /> <br />
+<Headline name = "Featured" title="New Arrival"/>
 
+<GridCategory/>
+
+<br /> <br />
+<Headline name="products" title="Explore our products"/>
+<br />
+
+
+{/* Products card grid */}
+<div className='flex flex-wrap gap-5 justify-center mx-auto '>
+{
+  products && products.map((item,index)=>{
+    return <Card key={index} item={item}/>
+  })
+}
+
+<div className=' mt-4 p- flex w-full justify-center'>
+  <button className='bg-red-500 rounded-md text-white p-2 px-3 '>View all products</button>
+</div>
+</div>
     </>
   )
 }
